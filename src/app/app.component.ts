@@ -10,4 +10,8 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'connected-four-game';
+
+  public onSave(status?: string) {
+    console.log(status);
+  }
 }
