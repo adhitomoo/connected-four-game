@@ -86,30 +86,27 @@ const config = {
       },
       colors                  : {
         gray: colors.slate,
-        'primary': '#7C5DFA',
-        'secondary': '#9277FF',
-        'primary-black': '#1E2139',
-        'secondary-black': '#252945',
-        'accent-white': '#DFE3FA',
-        'accent-gray': '#888EB0',
-        'accent-secondary': '#7E88C3',
-        'accent-black': '#0C0E16',
-        'error': '#EC5757',
-        'error-light': '#9277FF',
-        'light-bg': '#F8F8FB',
-        'deep-black': '#141625'
+        'primary': '#5C2DD5',
+        'secondary': '#7945FF',
+        'primary-black': '#000000',
+        'primary-pink': '#FD6687',
+        'primary-yellow': '#FFCE67',
+        'primary-white': '#FFFFFF'
       },
       flex                    : {
         '0': '0 0 auto'
       },
       fontFamily              : {
-        sans: `"League Spartan", ${defaultTheme.fontFamily.sans.join(',')}`,
+        sans: `"Space Grotesk", ${defaultTheme.fontFamily.sans.join(',')}`,
         // mono: `"IBM Plex Mono", ${defaultTheme.fontFamily.mono.join(',')}`
       },
       opacity                 : {
         12: '0.12',
         38: '0.38',
         87: '0.87'
+      },
+      borderRadius                : {
+        '4xl': '3.5rem'
       },
       rotate                  : {
         '-270': '270deg',
