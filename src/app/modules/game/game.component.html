@@ -1,36 +1,87 @@
 <ng-container>
-  <div id="game" class="bg-secondary w-full h-svh">
-    <div class="flex items-center justify-center h-full">
-      <div class="wrapper-board relative group">
-        <img src="/assets/images/board-layer-black-large.svg" class="w-200 h-200 object-contain relative z-10" alt="">
-        <img src="/assets/images/board-layer-white-large.svg" class="w-200 h-200 absolute -top-3 left-0 right-0 object-contain z-30" alt="">
-        <div class="absolute top-0 right-0 left-0 bottom-0 grid grid-cols-7 z-20 pb-22 pt-10 px-2 overflow-hidden">
-          @for (item of boards; track $index) {
-            <a href="javascript:void(0)">
-              <div class="flex justify-center items-center">
-                <img src="/assets/images/counter-red-large.svg" alt="" class="w-26 h-26">
-              </div>
-            </a>
-          }
+  <div id="game" class="bg-secondary w-full h-svh relative">
+    <div class="flex flex-col items-center justify-center h-full gap-10">
+      <div class="flex items-center justify-between w-200">
+        <button class="text-white text-xl bg-primary rounded-3xl px-4 py-2" (click)="onMenu()">
+          MENU
+        </button>
+        <img src="/assets/images/logo.svg" alt="game-logo">
+        <button class="text-white text-xl bg-primary rounded-3xl px-4 py-2" (click)="restartGame()">
+          RESTART
+        </button>
+      </div>
+
+      <div class="w-320 flex flex-row justify-between items-center">
+        <div class="relative bg-white flex flex-col items-center justify-center border-4 border-b-14 border-primary-black rounded-3xl w-48 h-56">
+          <div class="text-4xl text-primary-black font-bold">{{ currentPlayer === 1 ? 'YOU' : 'PLAYER 1' }}</div>
+          <div class="text-8xl text-primary-black font-bold h-14">{{ totalWin.p1 ?? 0 }}</div>
+
+          <img src="{{ currentPlayer === 1 ? '/assets/images/turn-player-1.svg' : '/assets/images/player-one.svg'}}" alt="icon-one" class="w-20 h-20 absolute -top-10 right-0 left-0 m-auto">
         </div>
 
-        <div class="absolute right-0 top-0 left-0 w-full h-full z-50 grid grid-flow-col grid-cols-7 px-2">
-          @for (item of [0, 1, 2, 3, 4, 5, 6]; track $index) {
-            <div class="marked w-26 h-full relative flex justify-center" [class]="$index ? 'group' : ''">
-              <img src="/assets/images/marker-red.svg" class="w-10 h-10 relative -top-6 hidden group-hover:block" alt="marked">
+        <div class="wrapper-board relative group">
+          <img src="/assets/images/board-layer-black-large.svg" class="w-200 h-200 object-contain relative z-10" alt="">
+          <div class="absolute -top-3 right-0 left-0 bottom-0 grid grid-cols-7 pb-22 pt-10 px-4 z-20">
+            @for (rows of boards; let rowindex = $index; track rowindex) {
+              @for(cell of rows; let colIndex = $index; track colIndex) {
+                <div class="flex justify-center items-center relative z-20 w-26 h-26">
+                  <div class="w-full h-full relative">
+                    <img src="{{ cell === 1 ? '/assets/images/counter-red-large.svg' : '/assets/images/counter-yellow-large.svg'}}" alt="" class="w-full h-full marker">
+                    <div *ngIf="markWin(rowindex, colIndex)" class="absolute top-0 left-0 right-0 bottom-0 m-auto justify-center items-center w-8 h-8 rounded-full border-white border-8 flicker-in-1"></div>
+                  </div>
+
+                  <!-- <img *ngIf="cell === 2" src="/assets/images/counter-yellow-large.svg" alt="" class="w-full h-full marker"> -->
+                  @if (rowindex === 0) {
+                    <img src="{{ currentPlayer === 1 ? '/assets/images/marker-red.svg' : '/assets/images/marker-yellow.svg' }}" alt="" class="absolute -top-15 w-14 h-12 col-marker hidden">
+                  }
+                </div>
+              }
+            }
+          </div>
+          <img src="/assets/images/board-layer-white-large.svg" class="w-200 h-200 absolute -top-3 left-0 right-0 object-contain z-30" alt="">
+
+          <!-- /* Functionality */ -->
+          <div class="absolute top-0 right-0 left-0 bottom-0 grid grid-cols-7 pb-22 pt-10 px-2 overflow-hidden z-40">
+            @for (rows of boards; let rowindex = $index; track rowindex) {
+              @for(cell of rows; let colIndex = $index; track colIndex) {
+                <div href="javascript:void(0)" (click)="onFill(colIndex)" class="cursor-pointer focus-marked">
+                </div>
+              }
+            }
+          </div>
+        </div>
+
+        <div class="relative bg-white flex flex-col items-center justify-center border-4 border-b-14 border-primary-black rounded-3xl w-48 h-56">
+          <div class="text-4xl text-primary-black font-bold">{{ currentPlayer === 2 ? 'YOU' : 'PLAYER 2' }}</div>
+          <div class="text-8xl text-primary-black font-bold h-14">2</div>
+
+          <img src="{{ currentPlayer !== 1 ? '/assets/images/turn-other-player.svg' : '/assets/images/player-two.svg'}}" alt="icon-one" class="w-20 h-20 absolute -top-10 right-0 left-0 m-auto">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <div class="absolute bottom-0 left-0 right-0 h-64 w-full rounded-t-4xl flex items-center justify-center" [class]="isWin ? 'bg-primary-pink' : 'bg-primary'">
+        <div class="counter relative z-99 -top-10">
+          @if (!isWin) {
+            <img src="{{ currentPlayer === 1 ? '/assets/images/turn-background-red.svg' : '/assets/images/turn-background-yellow.svg'}}" alt="turn">
+            <div class="text-counter absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center pt-4" [class]="currentPlayer === 1 ? 'text-white' : 'text-primary-black'">
+              <div class="text-xl font-bold">Player 1 Turn</div>
+              <div class="text-8xl font-bold">{{counter()}}s</div>
             </div>
           }
-        </div>
-        <!-- <div class="w-240 h-240 rounded-4xl bg-primary-black pb-20 z-20 flex flex-row flex-wrap flex-auto gap-4 p-8">
-          @for (item of boards; track $index) {
-            <div class="w-28 h-28 rounded-full border-4 border-primary-black border-t-8 hole"></div>
+
+          @if (isWin) {
+            <div class="w-80 h-40 rounded-3xl bg-primary-black relative">
+              <div class="absolute right-0 left-0 bottom-0 rounded-3xl -top-6 bg-white w-79 h-full border-4 border-primary-black flex flex-col gap-0 items-center justify-center">
+                <div class="text-xl font-bold text-primary-black">Player {{winner}}</div>
+                <div class="text-8xl font-bold text-primary-black">WINS</div>
+              </div>
+            </div>
           }
+
         </div>
-        <div class="w-240 h-240 rounded-4xl bg-white pb-20 absolute -top-4 left-0 right-0 z-10 border-4 border-primary-black flex flex-row flex-wrap flex-auto gap-4 p-8">
-          @for (item of boards; track $index) {
-            <div class="w-28 h-28 rounded-full border-4 border-primary-black border-t-8 hole"></div>
-          }
-        </div> -->
       </div>
     </div>
   </div>

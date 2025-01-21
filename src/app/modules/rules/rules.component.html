@@ -1,0 +1,27 @@
+<div class="bg-primary w-full h-svh flex items-center justify-center">
+  <div class="relative bg-white w-160 h-auto min-h-180 py-8 px-8 text-center border-4 border-b-14 border-primary-black rounded-4xl flex flex-col gap-8">
+    <h1 class="text-8xl font-bold text-primary-black">RULES</h1>
+    <div class="flex flex-col gap-8 text-left">
+      <div class="objective flex flex-col gap-4">
+        <h2 class="text-4xl font-bold text-primary">OBJECTIVE</h2>
+        <p class="text-xl">
+          Be the first player to connect 4 of the same colored discs in a row (either vertically, horizontally, or diagonally).
+        </p>
+      </div>
+
+      <div class="how-to- flex flex-col gap-4">
+        <h2 class="text-4xl font-bold text-primary">HOW TO PLAY</h2>
+        <ul class="text-xl pl-6 list-decimal block leading-8">
+          <li>Red goes first in the first game.</li>
+          <li>Players must alternate turns, and only one disc can be dropped in each turn.</li>
+          <li>The game ends when there is a 4-in-a-row or a stalemate.</li>
+          <li>The starter of the previous game goes second on the next game.</li>
+        </ul>
+      </div>
+    </div>
+
+    <button [routerLink]="['/']" routerLinkActive="router-link-active"  class="overflow-hidden absolute w-30 h-30 -bottom-15 left-0 right-0 m-auto rounded-full hover:opacity-95 transition-opacity">
+      <img src="/assets/images/icon-check.svg" class="w-30 h-30 m-auto" alt="icon-check">
+    </button>
+  </div>
+</div>

@@ -2,6 +2,7 @@ const path = require('path');
 const colors = require('tailwindcss/colors');
 const defaultTheme = require('tailwindcss/defaultTheme');
 const plugin = require("tailwindcss/plugin");
+const { transform } = require('typescript');
 // const generatePalette = require(path.resolve(__dirname, ('src/@fuse/tailwind/utils/generate-palette')));
 
 /**
@@ -45,6 +46,12 @@ const config = {
   darkMode   : 'selector',
   content    : ['./src/**/*.{html,scss,ts}'],
   important  : true,
+  variants: {
+    extend: {
+      transform: ['group-hover'],
+      scale: ['group-hover'],
+      display: ['group-hover'],}
+  },
   theme      : {
     fontSize: {
       'xs'  : '0.625rem',
@@ -105,6 +112,9 @@ const config = {
         38: '0.38',
         87: '0.87'
       },
+      borderWidth             : {
+        14: '14px'
+      },
       borderRadius                : {
         '4xl': '3.5rem'
       },
@@ -116,7 +126,9 @@ const config = {
         '270' : '270deg'
       },
       scale                   : {
-        '-1': '-1'
+        '-1': '-1',
+        '50': '.5',
+        '200': '2'
       },
       zIndex                  : {
         '-1'   : -1,

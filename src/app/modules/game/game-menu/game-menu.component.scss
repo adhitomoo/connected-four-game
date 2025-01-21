@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+  ::ng-deep .game-menu-dialog {
+    position: relative !important;
+    width: 560px;
+    height: 560px;
+    &.cdk-overlay-pane.mat-mdc-dialog-panel {
+      max-width: 100%;
+    }
+    .mat-mdc-dialog-container {
+      .mdc-dialog__container {
+        padding: 4px;
+        padding-bottom: 18px;
+        .mat-mdc-dialog-surface {
+          &.mdc-dialog__surface {
+            border-radius: 36px !important;
+            background-color: theme('colors.primary') !important;
+          }
+        }
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background-color: #000;
+          width: 100%;
+          height: 100%;
+          border-radius: 36px !important;
+        }
+      }
+    }
+  }
+}
+

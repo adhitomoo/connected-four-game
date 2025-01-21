@@ -1,0 +1,21 @@
+<ng-container>
+  <div class="bg-primary w-full h-svh relative flex items-center justify-center">
+    <div class="bg-secondary rounded-4xl w-200 h-180 flex flex-col gap-18 items-center justify-center border-4 border-b-14 border-primary-black">
+      <img src="/assets/images/logo.svg" alt="game-logo">
+      <div class="flex flex-col gap-2">
+        <button (click)="onNavigateGame('cpu')" class="group transition-all hover:opacity-70 overflow-hidden rounded-3xl bg-primary-pink text-black px-4 py-2 mb-4 w-100 h-24 border-4 border-b-14 border-primary-black font-bold text-2xl flex justify-between items-center">
+          PLAYER VS CPU
+          <img class="scale-200 group-hover:scale-100 transition-transform" src="/assets/images/player-vs-cpu.svg" alt="icon-player-vs-player">
+        </button>
+
+        <button (click)="onNavigateGame('p2')" class="group overflow-hidden rounded-3xl bg-primary-yellow text-black px-4 py-2 mb-4 w-100 h-24 border-4 border-b-14 border-primary-black font-bold text-2xl flex justify-between items-center transition-opacity hover:opacity-70">
+          PLAYER VS PLAYER
+          <img class="scale-200 group-hover:scale-100 transition-transform" src="/assets/images/player-vs-player.svg" alt="icon-player-vs-player">
+        </button>
+
+        <button [routerLink]="['./rule']" routerLinkActive="router-link-active"  class="rounded-3xl bg-white text-black px-4 py-2 mb-4 w-100 h-24 border-4 border-b-14 border-primary-black font-bold text-2xl text-left transition-opacity hover:opacity-70">GAMES RULES</button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
